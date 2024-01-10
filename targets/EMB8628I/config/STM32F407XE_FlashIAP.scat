@@ -1,0 +1,34 @@
+;******************************************************************************
+;
+;                         SCATTER LOADING DESCRIPTION
+;                                    ARM
+;                             KEIL's uVision3 
+;                   (RealView Microprocessor Developer Kit)
+;
+; Filename      : STM32F407XE_FlashIAP.scat
+;******************************************************************************
+LR_IROM1 0x08004000 0x0007C000 									;; Load region
+{
+
+    ER_IROM1 0x08004000	0x0007C000
+    {
+   		vectors.o (VECT, +First)
+		inita.o (INIT,LAST)
+		* (+RO)
+    }
+
+	
+    RW_IRAM1 0x20000000 0x00020000
+    {
+        .ANY (+RW,+ZI)
+    }                                                           ;; The following declarations select the "two region model" ;
+    
+	CCM_IRAM 0x10000000 0x00010000
+    {
+        .ANY (CCM_IRAM)
+    }
+
+      ;; A default __user_initial_stackheap() will be used        ;
+    ARM_LIB_HEAP  0x2001E000 EMPTY  0x00001800   {}
+    ARM_LIB_STACK 0x2001FFF0 EMPTY -0x000007F0   {}
+}
